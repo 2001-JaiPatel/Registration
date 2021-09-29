@@ -1,0 +1,98 @@
+doctype html
+html(lang='en')
+  head
+    link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    link(rel='stylesheet' href='/css/login.css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css' integrity='sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round')
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    script(src='https://code.jquery.com/jquery-3.5.1.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/js/bootstrap.min.js' integrity='sha512-ewfXo9Gq53e1q1+WDTjaHAGZ8UvCWq0eXONhwDuIoaH8xz2r96uoAYaQCm1oQhnBfRXrvJztNXFsTloJfgbL5Q==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    title Login Form
+  body
+    .wrapper.fadeInDown
+      #formContent
+        // Tabs Titles
+        // Icon
+        .fadeIn.first
+          i.fas.fa-user
+        // Login Form
+        form(method='post' action='/login')
+          input#password.fadeIn.third(type='text' name='email' onfocus='' required:true='' placeholder='email')
+          input#password.fadeIn.third(type='text' name='password' onfocus='' required:true='' placeholder='password')
+          br
+          input.fadeIn.fourth(type='submit' value='Log In')
+        // Remind Passowrd
+        #formFooter
+          a.underlineHover.edit(href='#addEmployeeModal' data-toggle='modal') Forgot Password?
+          a.edit(href='#editEmployeeModal' data-toggle='modal')
+            i.material-icons(data-toggle='tooltip' title='Forgot Password?') 
+      .modal-footer
+        | Dont have account?
+        a(href='/getRegister') Sign up
+        a
+      a
+    a
+      // Edit Modal HTML
+    #editEmployeeModal.modal.fade
+      a
+      .modal-dialog
+        a
+        .modal-content
+          a
+          form(method='POST' action='/forotPassword')
+            a
+              .modal-header
+                | Forgot your passsword
+                button.close(type='button' data-dismiss='modal' aria-hidden='true') ×
+              .modal-body
+                .form-group
+                  label Please enter the email addrees you'd like your new password information sent to 
+                  br
+                  label Enter email address 
+                  input#frgtPswdEmail.form-control(type='email' onkeydown='validateMailID(this)' required='required')
+                  span#emailError(style='color:red')
+            .modal-footer
+              a
+                input#btnResetPassword.btn.btn-default(type='submit' data-dismiss='modal' value='Request reset password' onclick='forgotPassword(this)')
+              a(href='/')  Back to Home page
+    script.
+      function validateMailID(e){
+      const emailid = document.getElementById("frgtPswdEmail").value;
+      console.log(e.value);
+      fetch(`/checkForUseExist?email=${e.value}`, {
+      credentials: 'include'
+      }).then((res)=>res.text()).then((res)=>{
+      console.log(res)
+      if(res == "valid"){
+      document.getElementById("btnResetPassword").disabled = true;
+      document.getElementById("emailError").innerText= "Email Id not exist. Please enter valid email id.";
+      }else{
+      document.getElementById("btnResetPassword").disabled = false;
+      document.getElementById("emailError").innerText= "";
+      }
+      }).catch(console.error)
+      }
+      function forgotPassword(e){
+      const emailid = document.getElementById("frgtPswdEmail").value;
+      console.log(emailid);
+      const data={email : emailid};
+      console.log("\\n data "+JSON.stringify(data));
+      fetch(`/forgotPassword?email=${emailid}`, {
+      method: 'post',
+      body: JSON.stringify(data),
+      })
+      .then(res => res.text())
+      .then(res => {
+      console.log('res:', res);
+      })
+      .catch((error) => {
+      console.error('Error:', error);
+      });
+      }

@@ -1,0 +1,58 @@
+block content
+ -var userlist = users
+ div
+  table#userTable.display(style='width:100%')
+    thead
+      tr         
+        th 
+          | First Name 
+          i.fas.fa-sort
+        th 
+          | Last Name 
+          i.fas.fa-sort
+        th 
+          | Email
+          i.fas.fa-sort
+        th 
+          | City
+          i.fas.fa-sort
+        th 
+          | Description 
+          i.fas.fa-sort
+        th 
+          | Hobby
+          i.fas.fa-sort
+        th 
+          | Gender
+          i.fas.fa-sort
+        th 
+          | Status 
+          i.fas.fa-sort
+        th 
+          | action 
+          i.fas.fa-sort
+    tbody 
+      each user in users
+        tr#user._id          
+          td=user.firstname
+          td=user.lastname          
+          td=user.email
+          td=user.city
+          td=user.description
+          td=user.hobby
+          td=user.gender
+          td=user.status
+          td 
+            div.a   
+            a.btn.btn-primary.btn-lg.active(href=`/user_info/${user.email}` role='button' aria-pressed='true') edit 
+            button.btn.btn-danger.btn-lg.active(onclick=`deleteUser("${user._id}")` role='button' aria-pressed='true') delete
+
+
+          
+          
+          
+          
+          
+            
+
+    
