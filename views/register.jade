@@ -119,7 +119,7 @@ html(lang='en')
             .col
               input.form-control(type='text' name='lastname' placeholder='Last Name' required='required')
         .form-group
-          input.form-control(type='email' name='email' placeholder='Email' required='required' onkeydown='validateMailID(this)')
+          input.form-control(type='email' name='email' pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$' size="30" placeholder='Email' required='required' onkeydown='validateMailID(this)')
           span#emailError(style='color:red')   
         .form-group
           input#password.form-control(type='password' name='password' placeholder='********' required='required')
