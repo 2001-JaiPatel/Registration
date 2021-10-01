@@ -309,12 +309,10 @@ html(lang='en')
       .then(res => {
       console.log('res:', res);
       if(res == "Deleted"){
-      alert("User successfully deleted.");     
-      fetch(`/getAllUser`, {
-      credentials: 'include'})
+      alert("User successfully deleted.");
+      location.reload();      
       }
-      })
-      .catch((error) => {
+      }).catch((error) => {
       console.error('Error:', error);
       });
       }
